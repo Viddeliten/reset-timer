@@ -38,6 +38,13 @@ class Controller implements controllers
     {
         if(!empty($_POST))
         {
+			// $this->pprint($_POST);
+            if(isset($_POST['resetTimer']) && isset($_GET['timer']))
+			{
+				// Call model to update timer
+                $timer = new Timer($_GET['timer']);
+                $timer->restart();
+			}
             // We have a request to update the timer
             if(isset($_POST['update_timer']) && isset($_GET['timer']))
             {

@@ -69,7 +69,7 @@ class Timer extends Model
 			$reset_time = $this->val['created']; // start from created if it has never been reset
 
 		$this->val['timer_ends'] = strtotime($reset_time." + ".$this->val['seconds_between']." seconds");
-        $this->val['seconds_left'] = $this->val['timer_ends']-$this->val['current_timestamp'];
+        $this->val['seconds_left'] = max(0, $this->val['timer_ends']-$this->val['current_timestamp']); // Seconds left, but stop at 0
 		
         return $this->val; // Also return it because handy when switching timers
     }
@@ -96,6 +96,18 @@ class Timer extends Model
         
         $this->db->update_from_array("timer", $this->val['id'], $values);        
     }
+	
+	public function restart()
+	{
+        if($this->timer_name == NULL || !isset($this->val['id']))
+        {
+            $error = _("Timer name missing");
+            return false;
+        }
+
+		$this->db->insert_from_array("timer_press", array("timer" => $this->val['id']));
+		$this->getTimer();
+	}
 }
 
 ?>

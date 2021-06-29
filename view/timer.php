@@ -17,7 +17,12 @@ $timerVals = $this->values['timer'];
 
 <p><?= sprintf(_("Description: %s"), $timerVals['description']) ?></p>
 
-<div id="countdown"><?= sprintf(_("%s seconds left"),$timerVals['seconds_left']) ?></div>
+<div id="resetButton">
+	<form method="post" id="resetTimerForm"><input type="hidden" name="resetTimer" value="reset"></form>
+	<img src="view/images/orangeButton_640.png" onclick="document.getElementById('resetTimerForm').submit();" style="height: 284px;"/>
+</div>
+
+<div id="countdown" style="font-size: 300%;"><?= sprintf(_("%s seconds left"),$timerVals['seconds_left']) ?></div>
 
 <script>
 // Set the distance outsidde of setInterval, otherwise it resets every loop and nothing happens ;)
@@ -35,15 +40,17 @@ var x = setInterval(function() {
 	var minutes = Math.floor((distance % (60 * 60)) / 60);
 	var seconds = distance % 60;
 	
-  // Display the result in the element with id="demo"
-  document.getElementById("countdown").innerHTML = days + "d " + hours + "h "
-  + minutes + "m " + seconds + "s ";
-
-  // If the count down is finished, write some text
-  if (distance < 0) {
+  if (distance <= 0) {
 	clearInterval(x);
-	document.getElementById("demo").innerHTML = "EXPIRED";
+	document.getElementById("countdown").innerHTML = "EXPIRED";
   }
+  else
+  {
+	  // Display the result in the element with id="countdown"
+	  document.getElementById("countdown").innerHTML = days + "d " + hours + "h "
+	  + minutes + "m " + seconds + "s ";
+  }
+  // If the count down is finished, write some text
 }, 1000);
 </script>
 
