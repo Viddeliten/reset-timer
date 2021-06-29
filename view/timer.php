@@ -2,7 +2,7 @@
 <?php
 
 $timerVals = $this->values['timer'];
-echo '<pre>'.print_r($timerVals, 1).'</pre>';
+// echo '<pre>'.print_r($timerVals, 1).'</pre>';
 
 ?>
 
@@ -17,7 +17,7 @@ echo '<pre>'.print_r($timerVals, 1).'</pre>';
 
 <p><?= sprintf(_("Description: %s"), $timerVals['description']) ?></p>
 
-<div id="countdown"></div>
+<div id="countdown"><?= sprintf(_("%s seconds left"),$timerVals['seconds_left']) ?></div>
 
 <script>
 // Set the distance outsidde of setInterval, otherwise it resets every loop and nothing happens ;)
